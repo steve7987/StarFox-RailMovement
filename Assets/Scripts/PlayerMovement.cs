@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using Cinemachine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -49,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         RotationLook(h,v, lookSpeed);
         HorizontalLean(playerModel, h, 80, .1f);
 
+        /*
         if (Input.GetButtonDown("Action"))
             Boost(true);
 
@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonUp("Fire3"))
             Break(false);
+        */
 
         if (Input.GetButtonDown("TriggerL") || Input.GetButtonDown("TriggerR"))
         {
@@ -107,11 +108,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void QuickSpin(int dir)
     {
+        /*
         if (!DOTween.IsTweening(playerModel))
         {
             playerModel.DOLocalRotate(new Vector3(playerModel.localEulerAngles.x, playerModel.localEulerAngles.y, 360 * -dir), .4f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine);
             barrel.Play();
         }
+        */
     }
 
     void SetSpeed(float x)
@@ -121,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     void SetCameraZoom(float zoom, float duration)
     {
-        cameraParent.DOLocalMove(new Vector3(0, 0, zoom), duration);
+        //cameraParent.DOLocalMove(new Vector3(0, 0, zoom), duration);
     }
 
     void DistortionAmount(float x)
@@ -139,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
         Camera.main.GetComponent<PostProcessVolume>().profile.GetSetting<ChromaticAberration>().intensity.value = x;
     }
 
-
+    /*
     void Boost(bool state)
     {
 
@@ -184,4 +187,5 @@ public class PlayerMovement : MonoBehaviour
         DOVirtual.Float(dolly.m_Speed, speed, .15f, SetSpeed);
         SetCameraZoom(zoom, .4f);
     }
+    */
 }

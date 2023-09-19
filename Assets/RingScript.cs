@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class RingScript : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public class RingScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            /*
             activated = true;
             transform.parent = other.transform.parent;
 
@@ -28,6 +28,7 @@ public class RingScript : MonoBehaviour
             s.Append(transform.DORotate(new Vector3(0, 0, -900), 3, RotateMode.LocalAxisAdd));
             s.Join(transform.DOScale(0, .5f).SetDelay(1f));
             s.AppendCallback(() => Destroy(gameObject));
+            */
         }
     }
 }
