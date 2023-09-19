@@ -18,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
     public float forwardSpeed = 6;
     public float xMax = 12f;
     public float yMax = 8f;
-
+    public float lookahead = 3f;
+    public float sightsDistance = 20f;
+    public float weaponRange = 24f;
     public float laserDisplayTime = 0.1f;
     public float laserCooldownTime = 0.1f;
 
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraParent;
     [SerializeField] GameObject leftLaser;
     [SerializeField] GameObject rightLaser;
+    [SerializeField] Transform farTargeter;
 
 
     Coroutine fireWeaponsCoroutine;
@@ -52,6 +55,11 @@ public class PlayerMovement : MonoBehaviour
         LocalMove(h, v, xySpeed);
         RotationLook(h,v, lookSpeed);
         HorizontalLean(playerModel, h, 80, .1f);
+
+        if (Input.anyKey)
+        {
+            FireWeapons();
+        }
     }
 
     void LocalMove(float x, float y, float speed)
@@ -69,10 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
         transform.localPosition = localPos;
 
-        if (Input.anyKey)
-        {
-            FireWeapons();
-        }
+        
 
         /*
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
@@ -84,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     void RotationLook(float h, float v, float speed)
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, gameplayPlane.transform.rotation * Quaternion.LookRotation(new Vector3(h, v, 1)), Mathf.Deg2Rad * speed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, gameplayPlane.transform.rotation * Quaternion.LookRotation(new Vector3(h, v, lookahead)), Mathf.Deg2Rad * speed * Time.deltaTime);
     }
 
     void HorizontalLean(Transform target, float axis, float leanLimit, float lerpTime)
@@ -110,6 +115,26 @@ public class PlayerMovement : MonoBehaviour
     {
         leftLaser.SetActive(true);
         rightLaser.SetActive(true);
+
+        //orient lasers
+        Vector3 sightsTarget = (farTargeter.position - transform.position).normalized * sightsDistance + transform.position;
+        leftLaser.transform.forward = sightsTarget - leftLaser.transform.position;
+        rightLaser.transform.forward = sightsTarget - rightLaser.transform.position;
+
+        //now raycast?
+        RaycastHit hit;
+        if (Physics.Raycast(leftLaser.transform.position, leftLaser.transform.forward, out hit, weaponRange, 1 << LayerMask.NameToLayer("Damagable")))
+        {
+            //Debug.Log("hit");
+            hit.collider.GetComponent<DamagableObject>().GetHit();
+        }
+        if (Physics.Raycast(rightLaser.transform.position, rightLaser.transform.forward, out hit, weaponRange, 1 << LayerMask.NameToLayer("Damagable")))
+        {
+            //Debug.Log("hit");
+            hit.collider.GetComponent<DamagableObject>().GetHit();
+        }
+        //Debug.DrawRay(leftLaser.transform.position, leftLaser.transform.forward * 24f, Color.magenta, 4f);
+
 
         yield return new WaitForSeconds(laserDisplayTime);
 
