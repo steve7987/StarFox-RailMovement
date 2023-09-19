@@ -16,6 +16,11 @@ public class PlayerMovement : MonoBehaviour
     public float xySpeed = 18;
     public float lookSpeed = 340;
     public float forwardSpeed = 6;
+    public float xMax = 12f;
+    public float yMax = 8f;
+
+    public float laserDisplayTime = 0.1f;
+    public float laserCooldownTime = 0.1f;
 
     [Space]
 
@@ -23,11 +28,20 @@ public class PlayerMovement : MonoBehaviour
     public Transform gameplayPlane;
     public CinemachineDollyCart dolly;
     public Transform cameraParent;
+    [SerializeField] GameObject leftLaser;
+    [SerializeField] GameObject rightLaser;
+
+
+    Coroutine fireWeaponsCoroutine;
 
     void Start()
     {
         playerModel = transform.GetChild(0);
         SetSpeed(forwardSpeed);
+        Cursor.visible = false;
+
+        leftLaser.SetActive(false);
+        rightLaser.SetActive(false);
     }
 
     void Update()
@@ -48,10 +62,24 @@ public class PlayerMovement : MonoBehaviour
 
     void ClampPosition()
     {
+        Vector3 localPos = transform.localPosition;
+
+        localPos.x = Mathf.Clamp(localPos.x, -xMax, xMax);
+        localPos.y = Mathf.Clamp(localPos.y, -yMax, yMax);
+
+        transform.localPosition = localPos;
+
+        if (Input.anyKey)
+        {
+            FireWeapons();
+        }
+
+        /*
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp01(pos.x);
         pos.y = Mathf.Clamp01(pos.y);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
+        */
     }
 
     void RotationLook(float h, float v, float speed)
@@ -68,6 +96,29 @@ public class PlayerMovement : MonoBehaviour
     void SetSpeed(float x)
     {
         dolly.m_Speed = x;
+    }
+
+    void FireWeapons()
+    {
+        if (fireWeaponsCoroutine == null)
+        {
+            fireWeaponsCoroutine = StartCoroutine(TriggerWeapons());
+        }
+    }
+
+    IEnumerator TriggerWeapons()
+    {
+        leftLaser.SetActive(true);
+        rightLaser.SetActive(true);
+
+        yield return new WaitForSeconds(laserDisplayTime);
+
+
+        leftLaser.SetActive(false);
+        rightLaser.SetActive(false);
+
+        yield return new WaitForSeconds(laserCooldownTime);
+        fireWeaponsCoroutine = null;
     }
 
     /*
