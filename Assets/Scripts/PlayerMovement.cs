@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,17 +20,9 @@ public class PlayerMovement : MonoBehaviour
     [Space]
 
     [Header("Public References")]
-    public Transform aimTarget;
+    public Transform gameplayPlane;
     public CinemachineDollyCart dolly;
     public Transform cameraParent;
-
-    [Space]
-
-    [Header("Particles")]
-    public ParticleSystem trail;
-    public ParticleSystem circle;
-    public ParticleSystem barrel;
-    public ParticleSystem stars;
 
     void Start()
     {
@@ -47,28 +38,6 @@ public class PlayerMovement : MonoBehaviour
         LocalMove(h, v, xySpeed);
         RotationLook(h,v, lookSpeed);
         HorizontalLean(playerModel, h, 80, .1f);
-
-        /*
-        if (Input.GetButtonDown("Action"))
-            Boost(true);
-
-        if (Input.GetButtonUp("Action"))
-            Boost(false);
-
-        if (Input.GetButtonDown("Fire3"))
-            Break(true);
-
-        if (Input.GetButtonUp("Fire3"))
-            Break(false);
-        */
-
-        if (Input.GetButtonDown("TriggerL") || Input.GetButtonDown("TriggerR"))
-        {
-            int dir = Input.GetButtonDown("TriggerL") ? -1 : 1;
-            QuickSpin(dir);
-        }
-
-
     }
 
     void LocalMove(float x, float y, float speed)
@@ -87,9 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     void RotationLook(float h, float v, float speed)
     {
-        aimTarget.parent.position = Vector3.zero;
-        aimTarget.localPosition = new Vector3(h, v, 1);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(aimTarget.position), Mathf.Deg2Rad * speed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, gameplayPlane.transform.rotation * Quaternion.LookRotation(new Vector3(h, v, 1)), Mathf.Deg2Rad * speed * Time.deltaTime);
     }
 
     void HorizontalLean(Transform target, float axis, float leanLimit, float lerpTime)
@@ -98,38 +65,15 @@ public class PlayerMovement : MonoBehaviour
         target.localEulerAngles = new Vector3(targetEulerAngels.x, targetEulerAngels.y, Mathf.LerpAngle(targetEulerAngels.z, -axis * leanLimit, lerpTime));
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(aimTarget.position, .5f);
-        Gizmos.DrawSphere(aimTarget.position, .15f);
-
-    }
-
-    public void QuickSpin(int dir)
-    {
-        /*
-        if (!DOTween.IsTweening(playerModel))
-        {
-            playerModel.DOLocalRotate(new Vector3(playerModel.localEulerAngles.x, playerModel.localEulerAngles.y, 360 * -dir), .4f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine);
-            barrel.Play();
-        }
-        */
-    }
-
     void SetSpeed(float x)
     {
         dolly.m_Speed = x;
     }
 
+    /*
     void SetCameraZoom(float zoom, float duration)
     {
         //cameraParent.DOLocalMove(new Vector3(0, 0, zoom), duration);
-    }
-
-    void DistortionAmount(float x)
-    {
-        Camera.main.GetComponent<PostProcessVolume>().profile.GetSetting<LensDistortion>().intensity.value = x;
     }
 
     void FieldOfView(float fov)
@@ -137,12 +81,7 @@ public class PlayerMovement : MonoBehaviour
         cameraParent.GetComponentInChildren<CinemachineVirtualCamera>().m_Lens.FieldOfView = fov;
     }
 
-    void Chromatic(float x)
-    {
-        Camera.main.GetComponent<PostProcessVolume>().profile.GetSetting<ChromaticAberration>().intensity.value = x;
-    }
-
-    /*
+    
     void Boost(bool state)
     {
 
