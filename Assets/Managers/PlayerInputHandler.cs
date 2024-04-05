@@ -8,7 +8,8 @@ public enum PlayerAction
     Scan,
     Fire,
     Heading,
-    LaunchShips,
+    LaunchFighters,
+    LaunchShuttles,
 }
 
 public class PlayerInputHandler : MonoBehaviour
@@ -42,7 +43,12 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            ChangeCurrentActionType(PlayerAction.LaunchShips);
+            ChangeCurrentActionType(PlayerAction.LaunchFighters);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ChangeCurrentActionType(PlayerAction.LaunchShuttles);
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -56,7 +62,7 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 case PlayerAction.None:
                     var mt = GetPositionFromMouse();
-                    targeterUI.SetTargeterPosition(mt);
+                    targeterUI.SetTargeterPosition(mt, true);
                     break;
                 case PlayerAction.Scan:
                     //want a delay here? how should that be handled?
@@ -90,12 +96,22 @@ public class PlayerInputHandler : MonoBehaviour
                     
                     ChangeCurrentActionType(PlayerAction.None);
                     break;
-                case PlayerAction.LaunchShips:
+                case PlayerAction.LaunchFighters:
                     //figure out what type to launch
                     Damageable d = targeterUI.GetClosestComponent<Damageable>();
                     if (d != null)
                     {
                         playerShip.GetComponent<DockingBay>().LaunchFighters(d, 3);
+                    }
+
+                    ChangeCurrentActionType(PlayerAction.None);
+                    break;
+                case PlayerAction.LaunchShuttles:
+                    //figure out what type to launch
+                    Landable l = targeterUI.GetClosestComponent<Landable>();
+                    if (l != null)
+                    {
+                        playerShip.GetComponent<DockingBay>().LaunchShuttles(l, 2);
                     }
 
                     ChangeCurrentActionType(PlayerAction.None);
@@ -109,15 +125,18 @@ public class PlayerInputHandler : MonoBehaviour
         switch (currentActionType)
         {
             case PlayerAction.Heading:
-            case PlayerAction.LaunchShips:
+            case PlayerAction.LaunchFighters:
             case PlayerAction.Fire:
             case PlayerAction.Scan:
+            case PlayerAction.LaunchShuttles:
                 var mt = GetPositionFromMouse();
-                targeterUI.SetTargeterPosition(mt);
+                targeterUI.SetTargeterPosition(mt, false);
                 
                 break;
             case PlayerAction.None:
+                break;
             default:
+                Debug.LogError("Unknown action: " + currentActionType);
                 break;
         }
 

@@ -44,9 +44,27 @@ public class DockingBay : MonoBehaviour
         Destroy(fighter.gameObject);
     }
 
-    public void LaunchShuttles(Landable target)
+    public void LaunchShuttles(Landable target, int numShuttles)
     {
-
+        StartCoroutine(LSCoroutine(target, numShuttles));
     }
-    
+
+    IEnumerator LSCoroutine(Landable target, int numShuttles)
+    {
+        while (currentShuttles > 0 && numShuttles > 0 && target != null)
+        {
+            ShuttleController shuttle = Instantiate(ShuttlePrefab, transform.position, Quaternion.identity).GetComponent<ShuttleController>();
+            shuttle.SetInitialTarget(target, this);
+            currentShuttles -= 1;
+            numShuttles -= 1;
+
+            yield return new WaitForSeconds(0.35f);
+        }
+    }
+
+    public void ReturnShuttle(ShuttleController shuttle)
+    {
+        currentShuttles += 1;
+        Destroy(shuttle.gameObject);
+    }
 }

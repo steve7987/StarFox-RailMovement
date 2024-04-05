@@ -7,7 +7,8 @@ public class UITargeter : MonoBehaviour
     [SerializeField] TMPro.TMP_Text scannerText;
     [SerializeField] GameObject targeterEffect;
     [SerializeField] float radius = 12.5f;
-    
+
+    [SerializeField] GameObject highlighterEffect;
 
     Scanable currentTarget;  //what's displayed on the text panel
 
@@ -18,9 +19,11 @@ public class UITargeter : MonoBehaviour
     private void Awake()
     {
         material = targeterEffect.GetComponent<MeshRenderer>().material;
+
+        highlighterEffect.SetActive(false);
     }
 
-    public void SetTargeterPosition(Vector3 position)
+    public void SetTargeterPosition(Vector3 position, bool clearNullTarget)
     {
         transform.position = position;
 
@@ -28,17 +31,17 @@ public class UITargeter : MonoBehaviour
         {
             case PlayerAction.None:
             case PlayerAction.Scan:
-                SetCurrentTarget(GetClosestComponent<Scanable>());
+                SetCurrentTarget(GetClosestComponent<Scanable>(), clearNullTarget);
                 break;
             case PlayerAction.Fire:
                 var d = GetClosestComponent<Damageable>();
                 if (d != null)
                 {
-                    SetCurrentTarget(d.GetComponent<Scanable>());
+                    SetCurrentTarget(d.GetComponent<Scanable>(), clearNullTarget);
                 }
                 else
                 {
-                    SetCurrentTarget(null);
+                    SetCurrentTarget(null, clearNullTarget);
                 }
                 break;
             case PlayerAction.Heading:
@@ -46,27 +49,61 @@ public class UITargeter : MonoBehaviour
                 var g = GetClosestComponent<GravitySource>();
                 if (g != null)
                 {
-                    SetCurrentTarget(g.GetComponent<Scanable>());
+                    SetCurrentTarget(g.GetComponent<Scanable>(), clearNullTarget);
+                }
+                break;
+            case PlayerAction.LaunchFighters:
+                //maybe update current target if its orbital?
+                d = GetClosestComponent<Damageable>();
+                if (d != null)
+                {
+                    SetCurrentTarget(d.GetComponent<Scanable>(), clearNullTarget);
+                }
+                break;
+            case PlayerAction.LaunchShuttles:
+                //maybe update current target if its orbital?
+                var l = GetClosestComponent<Landable>();
+                if (l != null)
+                {
+                    SetCurrentTarget(l.GetComponent<Scanable>(), clearNullTarget);
                 }
                 break;
             default:
+                Debug.LogError("Unknown action: " + currentAction);
                 break;
         }
-
     }
 
-    void SetCurrentTarget(Scanable nextTarget)
+    void SetCurrentTarget(Scanable nextTarget, bool clearNullTarget)
     {
-        currentTarget = nextTarget;
+        if (nextTarget != null || clearNullTarget)
+        {
+            currentTarget = nextTarget;
+        }
+
+        if (currentTarget != null)
+        {
+            scannerText.text = "Current Target:\n" + currentTarget.GetScanKnowledge();
+
+            //highlight item
+            highlighterEffect.transform.position = currentTarget.transform.position;
+            highlighterEffect.SetActive(true);
+        }
+        else
+        {
+            scannerText.text = "Current Target:";
+            highlighterEffect.SetActive(false);
+        }
     }
 
     private void Update()
     {
-        //Debug.Log(currentTarget);
         if (currentTarget != null)
         {
-            //put an outline on the target?
             scannerText.text = "Current Target:\n" + currentTarget.GetScanKnowledge();
+
+            //move highlighter
+            highlighterEffect.transform.position = currentTarget.transform.position;
         }
     }
 
@@ -87,10 +124,14 @@ public class UITargeter : MonoBehaviour
             case PlayerAction.Heading:
                 targeterEffect.SetActive(false);
                 break;
-            case PlayerAction.LaunchShips:
+            case PlayerAction.LaunchFighters:
+                targeterEffect.SetActive(false);
+                break;
+            case PlayerAction.LaunchShuttles:
                 targeterEffect.SetActive(false);
                 break;
             default:
+                Debug.LogError("Unknown action: " + action);
                 break;
         }
 
@@ -112,9 +153,16 @@ public class UITargeter : MonoBehaviour
                 targeterEffect.SetActive(true);
                 material.color = Color.blue;
                 break;
-            case PlayerAction.LaunchShips:
+            case PlayerAction.LaunchFighters:
                 targeterEffect.SetActive(true);
                 material.color = Color.cyan;
+                break;
+            case PlayerAction.LaunchShuttles:
+                targeterEffect.SetActive(true);
+                material.color = Color.white;
+                break;
+            default:
+                Debug.LogError("Unknown action: " + action);
                 break;
         }
 
