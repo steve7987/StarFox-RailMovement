@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
-    [SerializeField] float baseWidth = 72;
+    [SerializeField] float baseWidth = 135;  //NOT SURE WHY This value is what it is?
 
     BuildingData data;
 
@@ -18,7 +18,7 @@ public class BuildingController : MonoBehaviour
         Debug.Log(data.buildingImage.texture.width + ", " + data.buildingImage.texture.height);
 
         var lx = baseWidth * data.buildingSize.x / data.buildingImage.texture.width;
-        var ly = lx * (float)data.buildingImage.texture.height / data.buildingImage.texture.width;
+        var ly = lx;// * (float)data.buildingImage.texture.height / data.buildingImage.texture.width;
 
         transform.localScale = new Vector3(lx, ly, 1);
 
@@ -29,6 +29,7 @@ public class BuildingController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        
         Vector3 size = data == null ? new Vector3(2, 0.05f, 2) : new Vector3(data.buildingSize.x, 0f, data.buildingSize.y);
 
         Gizmos.color = Color.blue;
@@ -41,5 +42,6 @@ public class BuildingController : MonoBehaviour
         pos += size / 2f;
 
         Gizmos.DrawCube(pos, size);
+        
     }
 }

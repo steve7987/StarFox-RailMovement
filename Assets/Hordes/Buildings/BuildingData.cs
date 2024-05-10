@@ -9,7 +9,6 @@ public class BuildingData : ScriptableObject
     [Header("Cosmetic")]
     public string buildingName;
     public Sprite buildingImage;
-    public float height = 1f;
 
     public Vector2Int buildingSize = new Vector2Int(2, 2);
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c343745fe727b4083c1d1436670887, type: 3}
   m_Name: Big House
   m_EditorClassIdentifier: 
-  buildingName: Big House
-  buildingImage: {fileID: 21300000, guid: 6e249ceb96b3b8c47a4760c4902b3efd, type: 3}
-  height: 2
+  buildingName: New House
+  buildingImage: {fileID: 21300000, guid: 28b846471066db844b880a7caa809baa, type: 3}
+  height: 0
   buildingSize: {x: 2, y: 2}

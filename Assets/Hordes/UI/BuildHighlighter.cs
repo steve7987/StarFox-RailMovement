@@ -5,14 +5,16 @@ using UnityEngine;
 public class BuildHighlighter : MonoBehaviour
 {
     [SerializeField] int maxSize = 5;
-    [SerializeField] GameObject cubePrefab;
+    [SerializeField] HighlighterCube cubePrefab;
 
-    GameObject[,] cubes;
+    HighlighterCube[,] cubes;
 
+    Vector2Int lastPos;
+    Vector2Int curSize;
 
     private void Awake()
     {
-        cubes = new GameObject[maxSize, maxSize];
+        cubes = new HighlighterCube[maxSize, maxSize];
 
         for (int i = 0; i < maxSize; i++)
         {
@@ -21,11 +23,14 @@ public class BuildHighlighter : MonoBehaviour
                 cubes[i, j] = Instantiate(cubePrefab, new Vector3(i, 0, j), Quaternion.identity, transform);
             }
         }
+
+        
     }
 
     public void Activate()
     {
         gameObject.SetActive(true);
+        lastPos = Vector2Int.zero;
     }
 
     public void DeActivate()
@@ -35,20 +40,41 @@ public class BuildHighlighter : MonoBehaviour
 
     public void SetPosition(Vector3 mouseIntersect)
     {
+        Vector3 np = GridDrawer.WorldToGridPosition(mouseIntersect);
+        Vector2Int nip = new Vector2Int((int)np.x, (int)np.z);
 
-        transform.position = GridDrawer.WorldToGridPosition(mouseIntersect) + new Vector3(0.5f, 0, 0.5f);
-
+        //change in position
         //see if we actually moved and play sound if we did
+        if (nip != lastPos)
+        {
+            lastPos = nip;
+            transform.position = np + new Vector3(0.5f, 0, 0.5f);
+
+            //check buildable
+            CheckBuildable();
+        }
     }
-    
+
+    public void CheckBuildable()
+    {
+        for (int i = 0; i < curSize.x; i++)
+        {
+            for (int j = 0; j < curSize.y; j++)
+            {
+                cubes[i, j].SetBuildable(GridManager.instance.CanBuildSquare(lastPos.x + i, lastPos.y + j));
+            }
+        }
+    }
+
     public void SetSize(Vector2Int s)
     {
+        curSize = s;
         for (int i = 0; i < maxSize; i++)
         {
             for (int j = 0; j < maxSize; j++)
             {
                 
-                cubes[i, j].SetActive(i < s.x && j < s.y);
+                cubes[i, j].gameObject.SetActive(i < s.x && j < s.y);
                 
             }
         }

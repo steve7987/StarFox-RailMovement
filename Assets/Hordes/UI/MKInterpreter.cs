@@ -58,13 +58,18 @@ public class MKInterpreter : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
-                    currentState = MKState.NoAction;
-                    buildHighlighter.DeActivate();
+                    //currentState = MKState.NoAction;
+                    //buildHighlighter.DeActivate();
                     gridBuilder.CreateBuilding(availableBuildings[currentBuildIndex], hitPoint);
+                    buildHighlighter.CheckBuildable();
                 }
             }
 
-           
+            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+            {
+                currentState = MKState.NoAction;
+                buildHighlighter.DeActivate();
+            }
         }
     }
 
