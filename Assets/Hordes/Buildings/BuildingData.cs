@@ -15,11 +15,18 @@ public class BuildingData : ScriptableObject
     //cost
     [Header("Costs")]
     public float buildTime = 15f;
+    public float oreCost = 5f;
+    public float rareCost = 0f;
 
     //produces
+    [Header("Production")]
+    public float oreGen = 0;
+    public float rareGen = 0;
 
     //upkeep
-
+    [Header("Supply")]
+    public float workerSupply = 0;
+    public float powerSupply = -1;
 
     //methods
 
