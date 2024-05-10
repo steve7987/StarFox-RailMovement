@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Bunker
   buildingImage: {fileID: 21300000, guid: e4c7b68e37b48c54e8600e58cb3b324b, type: 3}
+  colliderHeight: 0.4
   buildingSize: {x: 3, y: 2}
+  buildTime: 15

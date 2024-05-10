@@ -24,7 +24,7 @@ public class GridBuilder : MonoBehaviour
             return;
         }
         
-        var build = Instantiate(buildingPrefab, pos, Quaternion.Euler(30, 45, 0));  //does rot match camera?
+        var build = Instantiate(buildingPrefab, pos, Quaternion.identity);
         build.Setup(data);
         gridManager.AddBuilding(pos, data);
     }

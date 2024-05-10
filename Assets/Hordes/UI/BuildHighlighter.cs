@@ -6,6 +6,7 @@ public class BuildHighlighter : MonoBehaviour
 {
     [SerializeField] int maxSize = 5;
     [SerializeField] HighlighterCube cubePrefab;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     HighlighterCube[,] cubes;
 
@@ -66,16 +67,18 @@ public class BuildHighlighter : MonoBehaviour
         }
     }
 
-    public void SetSize(Vector2Int s)
+    public void Activate(BuildingData data)
     {
-        curSize = s;
+        spriteRenderer.transform.localScale = data.GetSpriteScale();
+        spriteRenderer.sprite = data.buildingImage;
+
+
+        curSize = data.buildingSize;
         for (int i = 0; i < maxSize; i++)
         {
             for (int j = 0; j < maxSize; j++)
             {
-                
-                cubes[i, j].gameObject.SetActive(i < s.x && j < s.y);
-                
+                cubes[i, j].gameObject.SetActive(i < curSize.x && j < curSize.y);
             }
         }
     }

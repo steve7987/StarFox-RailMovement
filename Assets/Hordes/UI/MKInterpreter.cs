@@ -23,6 +23,8 @@ public class MKInterpreter : MonoBehaviour
     [SerializeField] Transform buildingPanel;
     [SerializeField] BuildingButton buildingButton;
 
+    [SerializeField] SelectionPanel selectionPanel;
+
     MKState currentState;
     int currentBuildIndex;
 
@@ -71,6 +73,24 @@ public class MKInterpreter : MonoBehaviour
                 buildHighlighter.DeActivate();
             }
         }
+        else if (currentState == MKState.NoAction)
+        {
+            if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from the mouse position
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 1000f, 1 << LayerMask.NameToLayer("Selectable")))
+                {
+                    Debug.Log("Select: " + hit.collider.GetComponent<BuildingController>().data.buildingName);
+                    selectionPanel.SetTarget(hit.collider.GetComponent<BuildingController>());
+                    //
+                }
+                else
+                {
+                    selectionPanel.ClearTarget();
+                }
+            }
+        }
     }
 
 
@@ -82,7 +102,7 @@ public class MKInterpreter : MonoBehaviour
         currentBuildIndex = index;
         buildHighlighter.Activate();
 
-        buildHighlighter.SetSize(availableBuildings[index].buildingSize);
+        buildHighlighter.Activate(availableBuildings[index]);
 
     }
 

@@ -5,26 +5,34 @@ using UnityEngine;
 public class BuildingController : MonoBehaviour
 {
     [SerializeField] float baseWidth = 135;  //NOT SURE WHY This value is what it is?
-
-    BuildingData data;
-
+    [SerializeField] Color constructionColor;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    public BuildingData data { get; private set; }
 
     public void Setup(BuildingData data)
     {
         this.data = data;
 
-        //need to scale based on sprite size vs building size and height?
-
-        Debug.Log(data.buildingImage.texture.width + ", " + data.buildingImage.texture.height);
-
-        var lx = baseWidth * data.buildingSize.x / data.buildingImage.texture.width;
-        var ly = lx;// * (float)data.buildingImage.texture.height / data.buildingImage.texture.width;
-
-        transform.localScale = new Vector3(lx, ly, 1);
-
-        GetComponent<SpriteRenderer>().sprite = data.buildingImage;
+        //setup building sprite
+        spriteRenderer.transform.localScale = data.GetSpriteScale();//new Vector3(lx, ly, 1);
+        spriteRenderer.sprite = data.buildingImage;
 
         //also want to scale collider?
+        BoxCollider bc = GetComponent<BoxCollider>();
+        bc.center = new Vector3(data.buildingSize.x / 2f, data.colliderHeight / 2f, data.buildingSize.y / 2f);
+        
+        bc.size = new Vector3(data.buildingSize.x, data.colliderHeight, data.buildingSize.y);
+
+
+        //begin building itself
+        StartCoroutine(ConstructionCorountine());
+    }
+
+    IEnumerator ConstructionCorountine()
+    {
+        spriteRenderer.color = constructionColor;
+        yield return new WaitForSeconds(data.buildTime);
+        spriteRenderer.color = Color.white;
     }
 
     private void OnDrawGizmosSelected()

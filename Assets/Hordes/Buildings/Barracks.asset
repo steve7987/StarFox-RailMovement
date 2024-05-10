@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Barracks
   buildingImage: {fileID: 21300000, guid: be0c1d754b413324698629a5356c7e75, type: 3}
-  height: 0
+  colliderHeight: 0.35
   buildingSize: {x: 3, y: 3}
+  buildTime: 15
