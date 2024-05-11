@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DamperTypes
+{
+    noDamper,
+    buildingDamper,
+    fullDamper,
+}
+
 public class GridManager
 {
     public static GridManager instance;
 
     bool[,] grid;
-    bool[,] dampers;
+    DamperTypes[,] dampers;
 
     //what grid info do we need?
     //damper field?
@@ -15,7 +22,7 @@ public class GridManager
     public GridManager(int sx, int sy)
     {
         grid = new bool[sx, sy];
-        dampers = new bool[sx, sy];
+        dampers = new DamperTypes[sx, sy];
         Debug.Assert(instance == null);
 
         instance = this;
@@ -35,8 +42,7 @@ public class GridManager
         }
     }
 
-
-    public void AddDampers(Vector3 pos, BuildingData data)
+    public void AddDampers(Vector3 pos, BuildingData data, bool inConstruction)
     {
         int sx = Mathf.RoundToInt(pos.x);
         int sy = Mathf.RoundToInt(pos.z);
@@ -47,7 +53,7 @@ public class GridManager
             {
                 if (i * i + j * j <= data.damperRange * data.damperRange)
                 {
-                    dampers[sx + i, sy + j] = true;
+                    dampers[sx + i, sy + j] = inConstruction ? DamperTypes.buildingDamper : DamperTypes.fullDamper;
                 }
             }
         }
@@ -77,7 +83,7 @@ public class GridManager
         return !grid[sx, sy];
     }
 
-    public bool HasDamper(int sx, int sy)
+    public DamperTypes GetDamperType(int sx, int sy)
     {
         return dampers[sx, sy];
     }

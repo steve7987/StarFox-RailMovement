@@ -4,27 +4,42 @@ using UnityEngine;
 
 public class HighlighterCube : MonoBehaviour
 {
-    [SerializeField] GameObject red;
-    [SerializeField] GameObject green;
-    [SerializeField] GameObject cyan;
+    [SerializeField] Color buildableColor;
+    [SerializeField] Color unbuildableColor;
+    [SerializeField] Color damperColor;
+    [SerializeField] Color buildingDamperColor;
+
+    [SerializeField] GameObject cube;
+
+    Material cm;
+
+    private void Awake()
+    {
+        cm = cube.GetComponent<MeshRenderer>().material;
+    }
 
     public void SetDisplayType(HighlightTypes highlight)
     {
-        red.SetActive(false);
-        green.SetActive(false);
-        cyan.SetActive(false);
         switch (highlight)
         {
             case HighlightTypes.off:
+                cube.SetActive(false);
                 break;
             case HighlightTypes.buildable:
-                green.SetActive(true);
+                cube.SetActive(true);
+                cm.color = buildableColor;
                 break;
             case HighlightTypes.unbuildable:
-                red.SetActive(true);
+                cube.SetActive(true);
+                cm.color = unbuildableColor;
                 break;
             case HighlightTypes.damper:
-                cyan.SetActive(true);
+                cube.SetActive(true);
+                cm.color = damperColor;
+                break;
+            case HighlightTypes.buildingDamper:
+                cube.SetActive(true);
+                cm.color = buildingDamperColor;
                 break;
 
         }

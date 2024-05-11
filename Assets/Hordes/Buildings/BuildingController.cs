@@ -44,6 +44,12 @@ public class BuildingController : MonoBehaviour
     {
         spriteRenderer.color = constructionColor;
         //yield return new WaitForSeconds(data.buildTime);
+        if (data.damperRange > 0)
+        {
+            GridManager.instance.AddDampers(transform.position, data, true);
+            GridDrawer.instance.RefreshDamperField();
+        }
+        
 
         float timeElapsed = 0;
 
@@ -62,7 +68,7 @@ public class BuildingController : MonoBehaviour
     {
         if (data.damperRange > 0)
         {
-            GridManager.instance.AddDampers(transform.position, data);
+            GridManager.instance.AddDampers(transform.position, data, false);
             GridDrawer.instance.RefreshDamperField();
         }
 

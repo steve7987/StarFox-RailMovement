@@ -8,6 +8,7 @@ public enum HighlightTypes
     buildable,
     unbuildable,
     damper,
+    buildingDamper,
 }
 
 public class GridDrawer : MonoBehaviour
@@ -37,9 +38,21 @@ public class GridDrawer : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                if (show && GridManager.instance.HasDamper(i, j))
+                if (show)
                 {
-                    HighlightCell(i, j, HighlightTypes.damper);
+                    if (GridManager.instance.GetDamperType(i, j) == DamperTypes.noDamper)
+                    {
+                        HighlightCell(i, j, HighlightTypes.off);
+                    }
+                    else if (GridManager.instance.GetDamperType(i, j) == DamperTypes.buildingDamper)
+                    {
+                        HighlightCell(i, j, HighlightTypes.buildingDamper);
+                    }
+                    else
+                    {
+                        HighlightCell(i, j, HighlightTypes.damper);
+                    }
+                    
                 }
                 else
                 {
@@ -83,18 +96,6 @@ public class GridDrawer : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             Gizmos.DrawLine(new Vector3(0, 0, i), new Vector3(100, 0, i));
-        }
-
-        Gizmos.color = Color.cyan;
-        for (int i = 0; i < 100; i++)
-        {
-            for (int j = 0; j < 100; j++)
-            {
-                if (GridManager.instance.HasDamper(i, j))
-                {
-                    Gizmos.DrawCube(new Vector3(i + 0.5f, 0, j + 0.5f), new Vector3(0.9f, 0.1f, 0.9f));
-                }
-            }
         }
     }
 

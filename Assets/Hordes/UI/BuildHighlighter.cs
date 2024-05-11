@@ -125,6 +125,5 @@ public class BuildHighlighter : MonoBehaviour
                 }
             }
         }
-
     }
 }
