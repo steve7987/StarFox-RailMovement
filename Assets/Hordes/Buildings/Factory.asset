@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8c343745fe727b4083c1d1436670887, type: 3}
-  m_Name: Barracks
+  m_Name: Factory
   m_EditorClassIdentifier: 
-  buildingName: Barracks
-  buildingImage: {fileID: 21300000, guid: 6b75006afc0754f49b4e2c1387a63d89, type: 3}
+  buildingName: Factory
+  buildingImage: {fileID: 21300000, guid: 8506392e6f10b6d40a136ed68ca16202, type: 3}
   colliderHeight: 0.35
   healthBarWidth: 210
   healthBarOffset: {x: 0, y: 3}
   buildingSize: {x: 3, y: 3}
   showDamperField: 1
   damperRange: 0
-  buildTime: 15
+  buildTime: 20
   oreCost: 20
   rareCost: 10
   oreGen: 0
   rareGen: 0
   workerSupply: -2
-  powerSupply: -2
+  powerSupply: -5

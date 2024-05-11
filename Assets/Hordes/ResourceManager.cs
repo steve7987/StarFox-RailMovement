@@ -30,13 +30,13 @@ public class ResourceManager : MonoBehaviour
 
         consumableResources = new Dictionary<ConsumableResource, float>();
         
-        consumableResources.Add(ConsumableResource.Ore, 50);
-        consumableResources.Add(ConsumableResource.Rare, 10);
+        consumableResources.Add(ConsumableResource.Ore, 5000);
+        consumableResources.Add(ConsumableResource.Rare, 1000);
 
         flowResources = new Dictionary<FlowResource, (float, float)>();
 
-        flowResources.Add(FlowResource.Worker, (0, 10));
-        flowResources.Add(FlowResource.Power, (0, 10));
+        flowResources.Add(FlowResource.Worker, (0, 1000));
+        flowResources.Add(FlowResource.Power, (0, 1000));
     }
 
     private void Start()

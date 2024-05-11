@@ -19,7 +19,7 @@ MonoBehaviour:
   healthBarOffset: {x: 0, y: 3.3}
   buildingSize: {x: 1, y: 1}
   showDamperField: 1
-  damperRange: 5
+  damperRange: 7
   buildTime: 5
   oreCost: 3
   rareCost: 0
