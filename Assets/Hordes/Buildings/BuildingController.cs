@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildingController : MonoBehaviour
 {
+    public const float resourceGenerationInterval = 7f;
+    
+    
     [SerializeField] float baseWidth = 135;  //NOT SURE WHY This value is what it is?
     [SerializeField] Color constructionColor;
     [SerializeField] SpriteRenderer spriteRenderer;
+
+    [Header("Health Bar")]
+    [SerializeField] RectTransform canvas;
+    [SerializeField] Slider slider;
+
+
     public BuildingData data { get; private set; }
 
     public void Setup(BuildingData data)
@@ -23,6 +33,10 @@ public class BuildingController : MonoBehaviour
         
         bc.size = new Vector3(data.buildingSize.x, data.colliderHeight, data.buildingSize.y);
 
+        //setup canvas and health bar
+        canvas.localPosition = new Vector3(data.healthBarOffset.x, data.healthBarOffset.y, 0);
+        var rt = slider.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(data.healthBarWidth, rt.sizeDelta.y);
 
         //begin building itself
         StartCoroutine(ConstructionCorountine());
@@ -31,8 +45,50 @@ public class BuildingController : MonoBehaviour
     IEnumerator ConstructionCorountine()
     {
         spriteRenderer.color = constructionColor;
-        yield return new WaitForSeconds(data.buildTime);
+        //yield return new WaitForSeconds(data.buildTime);
+
+        float timeElapsed = 0;
+
+        while (timeElapsed < data.buildTime)
+        {
+            timeElapsed += Time.deltaTime;
+            slider.value = timeElapsed / data.buildTime;
+            yield return null;
+        }
+
         spriteRenderer.color = Color.white;
+        OnConstructionComplete();
+    }
+
+    public void OnConstructionComplete()
+    {
+        //hide health bar, will re-enable later if building takes damage?
+        canvas.gameObject.SetActive(false);
+
+        //add in resources, start resource gen corountine if needed
+        if (data.powerSupply > 0)
+        {
+            ResourceManager.instance.AddResource(FlowResource.Power, data.powerSupply);
+        }
+        if (data.workerSupply > 0)
+        {
+            ResourceManager.instance.AddResource(FlowResource.Worker, data.workerSupply);
+        }
+
+        if (data.oreGen != 0 || data.rareGen != 0)
+        {
+            StartCoroutine(ResourceGenCoroutine());
+        }
+    }
+
+    IEnumerator ResourceGenCoroutine()
+    {
+        while (true)  //not destroyed?
+        {
+            yield return new WaitForSeconds(resourceGenerationInterval);
+            ResourceManager.instance.AddResource(ConsumableResource.Ore, data.oreGen);
+            ResourceManager.instance.AddResource(ConsumableResource.Rare, data.rareGen);
+        }
     }
 
     private void OnDrawGizmosSelected()

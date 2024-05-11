@@ -11,6 +11,11 @@ public class SelectionPanel : MonoBehaviour
         text.text = building.data.buildingName;
     }
 
+    public void SetTarget(BuildingData data)
+    {
+        text.text = data.buildingName + "\nCosts: " + data.oreCost + " ore"; 
+    }
+
     public void ClearTarget()
     {
         text.text = "";

@@ -10,7 +10,7 @@ public enum ConsumableResource
 
 public enum FlowResource
 {
-    People,
+    Worker,
     Power,
 }
 
@@ -30,13 +30,13 @@ public class ResourceManager : MonoBehaviour
 
         consumableResources = new Dictionary<ConsumableResource, float>();
         
-        consumableResources.Add(ConsumableResource.Ore, 50);
-        consumableResources.Add(ConsumableResource.Rare, 10);
+        consumableResources.Add(ConsumableResource.Ore, 50000);
+        consumableResources.Add(ConsumableResource.Rare, 1000);
 
         flowResources = new Dictionary<FlowResource, (float, float)>();
 
-        flowResources.Add(FlowResource.People, (0, 10));
-        flowResources.Add(FlowResource.Power, (4, 20));
+        flowResources.Add(FlowResource.Worker, (0, 1000));
+        flowResources.Add(FlowResource.Power, (4, 2000));
     }
 
     private void Start()
@@ -96,7 +96,7 @@ public class ResourceManager : MonoBehaviour
 
         displayText.text = "Ore: " + consumableResources[ConsumableResource.Ore]
                        + ", REM: " + consumableResources[ConsumableResource.Rare]
-                       + ", Workers: " + flowResources[FlowResource.People].Item1 + " / " + flowResources[FlowResource.People].Item2
+                       + ", Workers: " + flowResources[FlowResource.Worker].Item1 + " / " + flowResources[FlowResource.Worker].Item2
                        + ", Power: " + flowResources[FlowResource.Power].Item1 + " / " + flowResources[FlowResource.Power].Item2;
 
 

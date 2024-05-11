@@ -10,9 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8c343745fe727b4083c1d1436670887, type: 3}
-  m_Name: TC1
+  m_Name: Mine
   m_EditorClassIdentifier: 
-  buildingName: TC1
-  buildingImage: {fileID: 21300000, guid: 06dba0838ad81dc439adae4231ef5db1, type: 3}
-  height: 0
+  buildingName: Ore Mine
+  buildingImage: {fileID: 21300000, guid: 78990acd7e849c34bae6a60c8062da25, type: 3}
+  colliderHeight: 0.25
   buildingSize: {x: 2, y: 2}
+  buildTime: 8
+  oreCost: 10
+  rareCost: 0
+  oreGen: 8
+  rareGen: 0
+  workerSupply: -4
+  powerSupply: -4

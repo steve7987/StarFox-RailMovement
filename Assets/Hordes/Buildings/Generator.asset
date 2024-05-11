@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8c343745fe727b4083c1d1436670887, type: 3}
-  m_Name: Bunker
+  m_Name: Generator
   m_EditorClassIdentifier: 
-  buildingName: Bunker
-  buildingImage: {fileID: 21300000, guid: e4c7b68e37b48c54e8600e58cb3b324b, type: 3}
-  colliderHeight: 0.4
-  buildingSize: {x: 3, y: 2}
-  buildTime: 10
-  oreCost: 8
+  buildingName: Power Generator
+  buildingImage: {fileID: 21300000, guid: 31bfd2949f70f054583ae01497407479, type: 3}
+  colliderHeight: 1.25
+  buildingSize: {x: 4, y: 4}
+  buildTime: 12
+  oreCost: 15
   rareCost: 2
   oreGen: 0
   rareGen: 0
   workerSupply: -2
-  powerSupply: -2
+  powerSupply: 16

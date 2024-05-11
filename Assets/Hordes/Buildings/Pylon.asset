@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8c343745fe727b4083c1d1436670887, type: 3}
-  m_Name: Bunker
+  m_Name: Pylon
   m_EditorClassIdentifier: 
-  buildingName: Bunker
-  buildingImage: {fileID: 21300000, guid: e4c7b68e37b48c54e8600e58cb3b324b, type: 3}
-  colliderHeight: 0.4
-  buildingSize: {x: 3, y: 2}
-  buildTime: 10
-  oreCost: 8
-  rareCost: 2
+  buildingName: Damper
+  buildingImage: {fileID: 21300000, guid: c5df02f13b2c04c4bbfef23d5d7020f7, type: 3}
+  colliderHeight: 3
+  buildingSize: {x: 1, y: 1}
+  buildTime: 5
+  oreCost: 3
+  rareCost: 0
   oreGen: 0
   rareGen: 0
-  workerSupply: -2
-  powerSupply: -2
+  workerSupply: 0
+  powerSupply: -1

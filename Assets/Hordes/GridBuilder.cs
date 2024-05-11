@@ -25,7 +25,7 @@ public class GridBuilder : MonoBehaviour
         }
         if (!ResourceManager.instance.HasResource(ConsumableResource.Ore, data.oreCost)
          || !ResourceManager.instance.HasResource(ConsumableResource.Rare, data.rareCost)
-         || !ResourceManager.instance.HasResource(FlowResource.People, -data.workerSupply)
+         || !ResourceManager.instance.HasResource(FlowResource.Worker, -data.workerSupply)
          || !ResourceManager.instance.HasResource(FlowResource.Power, -data.powerSupply))
         {
             Debug.LogWarning("Not enough resources");
@@ -39,8 +39,16 @@ public class GridBuilder : MonoBehaviour
         ResourceManager.instance.AddResource(ConsumableResource.Ore, -data.oreCost);
         ResourceManager.instance.AddResource(ConsumableResource.Rare, -data.rareCost);
 
-        ResourceManager.instance.AddResource(FlowResource.Power, data.powerSupply);
-        ResourceManager.instance.AddResource(FlowResource.People, data.workerSupply);
+        //don't change these until construction complete??
+        if (data.powerSupply < 0)
+        {
+            ResourceManager.instance.AddResource(FlowResource.Power, data.powerSupply);
+        }
+        if (data.workerSupply < 0)
+        {
+            ResourceManager.instance.AddResource(FlowResource.Worker, data.workerSupply);
+        }
+        
 
         gridManager.AddBuilding(pos, data);
     }

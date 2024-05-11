@@ -10,6 +10,8 @@ public class BuildingData : ScriptableObject
     public string buildingName;
     public Sprite buildingImage;
     public float colliderHeight = 1f;
+    public float healthBarWidth = 160f;
+    public Vector2 healthBarOffset = new Vector2(0, 2);
     public Vector2Int buildingSize = new Vector2Int(2, 2);
 
     //cost

@@ -16,4 +16,10 @@ MonoBehaviour:
   buildingImage: {fileID: 21300000, guid: 28b846471066db844b880a7caa809baa, type: 3}
   colliderHeight: 2.35
   buildingSize: {x: 2, y: 2}
-  buildTime: 15
+  buildTime: 5
+  oreCost: 5
+  rareCost: 0
+  oreGen: 0
+  rareGen: 0
+  workerSupply: 4
+  powerSupply: -1

@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 1149771809}
   - component: {fileID: 1149771808}
   - component: {fileID: 1149771811}
+  - component: {fileID: 1149771812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1040,6 +1041,19 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1149771812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149771807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d894c6fe9b4724c95cee2b003c3287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 12
 --- !u!1 &1166805002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1257,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fc366a72a739e354c8cff814614bfac2, type: 2}
   - {fileID: 11400000, guid: 62e3fa3cc6852994993d500588056874, type: 2}
   - {fileID: 11400000, guid: ef6a9c1283b0c39418050d337e3d0622, type: 2}
+  - {fileID: 11400000, guid: 3a3ed29c9dbe26a43b560e652c624963, type: 2}
   - {fileID: 11400000, guid: e8b6bd3c825392d44b85072eaeec486b, type: 2}
+  - {fileID: 11400000, guid: 4bda43399513b2b458b59a52f868e85d, type: 2}
   buildingPanel: {fileID: 1166805003}
   buildingButton: {fileID: 2251152877873658259, guid: 9773394497dde774b97d8252bcfa618f,
     type: 3}

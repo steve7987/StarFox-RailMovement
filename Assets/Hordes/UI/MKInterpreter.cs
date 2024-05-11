@@ -71,6 +71,7 @@ public class MKInterpreter : MonoBehaviour
             {
                 currentState = MKState.NoAction;
                 buildHighlighter.DeActivate();
+                selectionPanel.ClearTarget();
             }
         }
         else if (currentState == MKState.NoAction)
@@ -81,7 +82,7 @@ public class MKInterpreter : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 1000f, 1 << LayerMask.NameToLayer("Selectable")))
                 {
-                    Debug.Log("Select: " + hit.collider.GetComponent<BuildingController>().data.buildingName);
+                    //Debug.Log("Select: " + hit.collider.GetComponent<BuildingController>().data.buildingName);
                     selectionPanel.SetTarget(hit.collider.GetComponent<BuildingController>());
                     //
                 }
@@ -101,9 +102,9 @@ public class MKInterpreter : MonoBehaviour
         currentState = MKState.Build;
         currentBuildIndex = index;
         buildHighlighter.Activate();
+        selectionPanel.SetTarget(availableBuildings[index]);
 
         buildHighlighter.Activate(availableBuildings[index]);
 
     }
-
 }

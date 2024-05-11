@@ -17,3 +17,9 @@ MonoBehaviour:
   colliderHeight: 0.35
   buildingSize: {x: 3, y: 3}
   buildTime: 15
+  oreCost: 20
+  rareCost: 10
+  oreGen: 0
+  rareGen: 0
+  workerSupply: -2
+  powerSupply: -2
