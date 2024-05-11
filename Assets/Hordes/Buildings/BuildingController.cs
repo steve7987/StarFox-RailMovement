@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class BuildingController : MonoBehaviour
 {
     public const float resourceGenerationInterval = 7f;
-    
-    
-    [SerializeField] float baseWidth = 135;  //NOT SURE WHY This value is what it is?
+
     [SerializeField] Color constructionColor;
     [SerializeField] SpriteRenderer spriteRenderer;
 
@@ -62,6 +60,12 @@ public class BuildingController : MonoBehaviour
 
     public void OnConstructionComplete()
     {
+        if (data.damperRange > 0)
+        {
+            GridManager.instance.AddDampers(transform.position, data);
+            GridDrawer.instance.RefreshDamperField();
+        }
+
         //hide health bar, will re-enable later if building takes damage?
         canvas.gameObject.SetActive(false);
 

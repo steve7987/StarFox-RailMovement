@@ -15,7 +15,11 @@ MonoBehaviour:
   buildingName: Ore Mine
   buildingImage: {fileID: 21300000, guid: 78990acd7e849c34bae6a60c8062da25, type: 3}
   colliderHeight: 0.25
+  healthBarWidth: 160
+  healthBarOffset: {x: 0, y: 1.75}
   buildingSize: {x: 2, y: 2}
+  showDamperField: 1
+  damperRange: 0
   buildTime: 8
   oreCost: 10
   rareCost: 0

@@ -15,7 +15,11 @@ MonoBehaviour:
   buildingName: Barracks
   buildingImage: {fileID: 21300000, guid: be0c1d754b413324698629a5356c7e75, type: 3}
   colliderHeight: 0.35
+  healthBarWidth: 210
+  healthBarOffset: {x: 0, y: 3}
   buildingSize: {x: 3, y: 3}
+  showDamperField: 1
+  damperRange: 0
   buildTime: 15
   oreCost: 20
   rareCost: 10

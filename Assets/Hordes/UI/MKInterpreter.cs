@@ -31,7 +31,6 @@ public class MKInterpreter : MonoBehaviour
     private void Awake()
     {
         currentState = MKState.NoAction;
-        buildHighlighter.Activate();
     }
 
     private void Start()
@@ -63,7 +62,8 @@ public class MKInterpreter : MonoBehaviour
                     //currentState = MKState.NoAction;
                     //buildHighlighter.DeActivate();
                     gridBuilder.CreateBuilding(availableBuildings[currentBuildIndex], hitPoint);
-                    buildHighlighter.CheckBuildable();
+                    //buildHighlighter.CheckBuildable();
+                    buildHighlighter.Activate(availableBuildings[currentBuildIndex]);
                 }
             }
 
@@ -97,11 +97,10 @@ public class MKInterpreter : MonoBehaviour
 
     public void SetBuilding(int index)
     {
-        Debug.Log(index);
+        //Debug.Log(index);
 
         currentState = MKState.Build;
         currentBuildIndex = index;
-        buildHighlighter.Activate();
         selectionPanel.SetTarget(availableBuildings[index]);
 
         buildHighlighter.Activate(availableBuildings[index]);

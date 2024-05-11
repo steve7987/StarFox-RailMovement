@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BuildHighlighter : MonoBehaviour
 {
+    
     [SerializeField] int maxSize = 5;
     [SerializeField] HighlighterCube cubePrefab;
     [SerializeField] SpriteRenderer spriteRenderer;
 
     HighlighterCube[,] cubes;
+
+    HighlighterCube[,] damperCubes;
 
     Vector2Int lastPos;
     Vector2Int curSize;
@@ -25,7 +28,23 @@ public class BuildHighlighter : MonoBehaviour
             }
         }
 
-        
+        //damper cubes needs to go around the highlighter?
+
+        damperCubes = new HighlighterCube[2 * maxSize, 2 * maxSize];
+
+        for (int i = -maxSize; i < maxSize; i++)
+        {
+            for (int j = -maxSize; j < maxSize; j++)
+            {
+                damperCubes[i + maxSize, j + maxSize] = Instantiate(cubePrefab, new Vector3(i, 0, j), Quaternion.identity, transform);
+            }
+        }
+
+    }
+
+    private void Start()
+    {
+        DeActivate();
     }
 
     public void Activate()
@@ -37,6 +56,7 @@ public class BuildHighlighter : MonoBehaviour
     public void DeActivate()
     {
         gameObject.SetActive(false);
+        GridDrawer.instance.ShowDamperField(false);
     }
 
     public void SetPosition(Vector3 mouseIntersect)
@@ -62,24 +82,49 @@ public class BuildHighlighter : MonoBehaviour
         {
             for (int j = 0; j < curSize.y; j++)
             {
-                cubes[i, j].SetBuildable(GridManager.instance.CanBuildSquare(lastPos.x + i, lastPos.y + j));
+
+                var hl = GridManager.instance.CanBuildSquare(lastPos.x + i, lastPos.y + j) ? HighlightTypes.buildable : HighlightTypes.unbuildable;
+
+                cubes[i, j].SetDisplayType(hl);
             }
         }
     }
 
     public void Activate(BuildingData data)
     {
+        gameObject.SetActive(true);
+
         spriteRenderer.transform.localScale = data.GetSpriteScale();
         spriteRenderer.sprite = data.buildingImage;
 
+        if (data.showDamperField)
+        {
+            GridDrawer.instance.ShowDamperField(true);
+        }
 
         curSize = data.buildingSize;
         for (int i = 0; i < maxSize; i++)
         {
             for (int j = 0; j < maxSize; j++)
-            {
+            {            
                 cubes[i, j].gameObject.SetActive(i < curSize.x && j < curSize.y);
             }
         }
+
+        for (int i = -maxSize; i < maxSize; i++)
+        {
+            for (int j = -maxSize; j < maxSize; j++)
+            {
+                if (data.showDamperField && i * i + j * j <= data.damperRange * data.damperRange)
+                {
+                    damperCubes[i + maxSize, j + maxSize].SetDisplayType(HighlightTypes.damper);
+                }
+                else
+                {
+                    damperCubes[i + maxSize, j + maxSize].SetDisplayType(HighlightTypes.off);
+                }
+            }
+        }
+
     }
 }

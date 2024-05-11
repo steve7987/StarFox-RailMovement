@@ -15,7 +15,11 @@ MonoBehaviour:
   buildingName: House
   buildingImage: {fileID: 21300000, guid: 28b846471066db844b880a7caa809baa, type: 3}
   colliderHeight: 2.35
+  healthBarWidth: 160
+  healthBarOffset: {x: -0.46, y: 4.24}
   buildingSize: {x: 2, y: 2}
+  showDamperField: 1
+  damperRange: 0
   buildTime: 5
   oreCost: 5
   rareCost: 0

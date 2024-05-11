@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Power Generator
   buildingImage: {fileID: 21300000, guid: 31bfd2949f70f054583ae01497407479, type: 3}
-  colliderHeight: 1.25
+  colliderHeight: 1.5
+  healthBarWidth: 320
+  healthBarOffset: {x: 0, y: 5.1}
   buildingSize: {x: 4, y: 4}
+  showDamperField: 1
+  damperRange: 0
   buildTime: 12
   oreCost: 15
   rareCost: 2

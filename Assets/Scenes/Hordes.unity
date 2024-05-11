@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f927ef08a0f14d913aefd43acf268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSize: 5
+  maxSize: 25
   cubePrefab: {fileID: 5782521030732132933, guid: af55c55b757264343acc4919922deec9,
     type: 3}
   spriteRenderer: {fileID: 1891993146}
@@ -673,6 +673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfac993258a41c249bdbb4aba7393f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridCubePrefab: {fileID: 5782521030732132933, guid: af55c55b757264343acc4919922deec9,
+    type: 3}
 --- !u!4 &777301974
 Transform:
   m_ObjectHideFlags: 0

@@ -14,6 +14,13 @@ public class BuildingData : ScriptableObject
     public Vector2 healthBarOffset = new Vector2(0, 2);
     public Vector2Int buildingSize = new Vector2Int(2, 2);
 
+    //some area display info
+    //e.g. damper field, or ore mine resources?
+
+    [Header("Damper")]
+    public bool showDamperField = false;
+    public float damperRange = 0;
+
     //cost
     [Header("Costs")]
     public float buildTime = 15f;
@@ -34,6 +41,7 @@ public class BuildingData : ScriptableObject
 
     public Vector3 GetSpriteScale()
     {
+        //why is this 135f??? 
         var lx = 135f * buildingSize.x / buildingImage.texture.width;
         var ly = lx;
 
