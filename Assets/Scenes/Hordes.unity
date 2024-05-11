@@ -1262,6 +1262,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a3ed29c9dbe26a43b560e652c624963, type: 2}
   - {fileID: 11400000, guid: e8b6bd3c825392d44b85072eaeec486b, type: 2}
   - {fileID: 11400000, guid: 4bda43399513b2b458b59a52f868e85d, type: 2}
+  - {fileID: 11400000, guid: 4f0dbea9eca19b6459206eb664d1ade7, type: 2}
   buildingPanel: {fileID: 1166805003}
   buildingButton: {fileID: 2251152877873658259, guid: 9773394497dde774b97d8252bcfa618f,
     type: 3}
