@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingWeapon : MonoBehaviour
 {
-    RakeController target;
+    Selectable target;
     bool findNewTarget = false;
 
     private void OnTriggerEnter(Collider other)
@@ -12,7 +12,7 @@ public class BuildingWeapon : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Rake"))
         {
             Debug.Log(other.gameObject);
-            target = other.GetComponent<RakeController>();
+            target = other.GetComponent<Selectable>();
             findNewTarget = true;
         }
     }
@@ -37,9 +37,9 @@ public class BuildingWeapon : MonoBehaviour
         var hits = Physics.OverlapSphere(transform.position, GetComponent<SphereCollider>().radius, 1 << LayerMask.NameToLayer("Rake"));
         foreach (var h in hits)
         {
-            if (h.GetComponent<RakeController>() != null)
+            if (h.GetComponent<Selectable>() != null)
             {
-                target = h.GetComponent<RakeController>();
+                target = h.GetComponent<Selectable>();
             }
         }
     }

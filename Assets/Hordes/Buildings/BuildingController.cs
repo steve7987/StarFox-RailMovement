@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingController : MonoBehaviour
+public class BuildingController : Selectable
 {
     public const float resourceGenerationInterval = 7f;
 
@@ -141,7 +141,7 @@ public class BuildingController : MonoBehaviour
 
     //make this abstract?
     //or use separate damage component?
-    public void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
         currentHitPoints -= amount;
         canvas.gameObject.SetActive(true);
@@ -153,6 +153,7 @@ public class BuildingController : MonoBehaviour
         }
     }
 
+    //also make a refund building as an ability?
     public void DestroyBuilding()
     {
         if (!underConstruction)
@@ -199,5 +200,10 @@ public class BuildingController : MonoBehaviour
 
         Gizmos.DrawCube(pos, size);
         
+    }
+
+    public override string GetText()
+    {
+        return data.buildingName;
     }
 }

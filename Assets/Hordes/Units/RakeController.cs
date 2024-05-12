@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RakeController : MonoBehaviour
+public class RakeController : Selectable
 {
     [SerializeField] Vector3 target;
     [SerializeField] float speed = 2.5f;
@@ -11,7 +11,7 @@ public class RakeController : MonoBehaviour
 
     Animator animator;
 
-    GameObject attackTarget;
+    Selectable attackTarget;
 
     float currentHP;
 
@@ -51,28 +51,31 @@ public class RakeController : MonoBehaviour
 
     }
 
-    public void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
         currentHP -= amount;
         hpSlider.gameObject.SetActive(true);
         hpSlider.value = currentHP / 50f;
         if (currentHP <= 0)
         {
-            Destroy(gameObject);
+            animator.SetTrigger("Death");
+            hpSlider.gameObject.SetActive(false);
+            Destroy(this);
+            Destroy(gameObject, 5f);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Selectable"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            attackTarget = other.gameObject;
+            attackTarget = other.GetComponent<Selectable>();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == attackTarget)
+        if (other.GetComponent<Selectable>() == attackTarget)
         {
             attackTarget = null;
         }
@@ -84,11 +87,17 @@ public class RakeController : MonoBehaviour
         Gizmos.DrawSphere(target, 0.5f);
     }
 
+    //triggered in animation
     void Claw()
     {
-        if (attackTarget != null && attackTarget.GetComponent<BuildingController>() != null)
+        if (attackTarget != null)
         {
-            attackTarget.GetComponent<BuildingController>().TakeDamage(10);
+            attackTarget.TakeDamage(10);
         }
+    }
+
+    public override string GetText()
+    {
+        return "Rake";
     }
 }

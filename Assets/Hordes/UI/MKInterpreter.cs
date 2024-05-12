@@ -79,10 +79,10 @@ public class MKInterpreter : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from the mouse position
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 1000f, 1 << LayerMask.NameToLayer("Selectable")))
+                if (Physics.Raycast(ray, out hit, 1000f, 1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Rake")))
                 {
                     //Debug.Log("Select: " + hit.collider.GetComponent<BuildingController>().data.buildingName);
-                    selectionPanel.SetTarget(hit.collider.GetComponent<BuildingController>());
+                    selectionPanel.SetTarget(hit.collider.GetComponent<Selectable>());
                     //
                 }
                 else

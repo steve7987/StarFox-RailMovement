@@ -14,9 +14,9 @@ TagManager:
   - Damagable
   - 
   - Post
-  - Selectable
+  - Player
   - Rake
-  - 
+  - Detector
   - 
   - 
   - 
