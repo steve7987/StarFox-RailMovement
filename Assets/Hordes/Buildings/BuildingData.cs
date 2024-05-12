@@ -40,6 +40,7 @@ public class BuildingData : ScriptableObject
 
     [Header("Combat")]
     public float maxHitPoints = 50;
+    public float attackRange = 0f;
 
 
     //methods

@@ -21,11 +21,12 @@ MonoBehaviour:
   dragBuild: 0
   showDamperField: 1
   damperRange: 0
-  buildTime: 10
+  buildTime: 6
   oreCost: 8
-  rareCost: 2
+  rareCost: 0
   oreGen: 0
   rareGen: 0
   workerSupply: -2
   powerSupply: -2
   maxHitPoints: 50
+  attackRange: 8

@@ -23,7 +23,7 @@ MonoBehaviour:
   damperRange: 0
   buildTime: 12
   oreCost: 15
-  rareCost: 2
+  rareCost: 0
   oreGen: -2
   rareGen: 2
   workerSupply: -2

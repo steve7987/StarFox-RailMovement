@@ -10,6 +10,9 @@ public class BuildingController : MonoBehaviour
     [SerializeField] Color constructionColor;
     [SerializeField] SpriteRenderer spriteRenderer;
 
+    [Header("Attacks")]
+    [SerializeField] SphereCollider rangeCollider;
+
     [Header("Health Bar")]
     [SerializeField] RectTransform canvas;
     [SerializeField] Slider slider;
@@ -61,7 +64,15 @@ public class BuildingController : MonoBehaviour
             StartCoroutine(ConstructionCorountine());
             currentHitPoints = 0;
         }
-        
+
+        if (data.attackRange > 0)
+        {
+            rangeCollider.radius = data.attackRange;
+        }
+        else
+        {
+            Destroy(rangeCollider.gameObject);
+        }
     }
 
     IEnumerator ConstructionCorountine()
@@ -128,12 +139,14 @@ public class BuildingController : MonoBehaviour
         }
     }
 
+    //make this abstract?
+    //or use separate damage component?
     public void TakeDamage(float amount)
     {
         currentHitPoints -= amount;
         canvas.gameObject.SetActive(true);
         slider.value = currentHitPoints / data.maxHitPoints;
-        Debug.Log(currentHitPoints);
+        //Debug.Log(currentHitPoints);
         if (currentHitPoints <= 0)
         {
             DestroyBuilding();

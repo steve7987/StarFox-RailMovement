@@ -194,8 +194,8 @@ MonoBehaviour:
     y: 0
     width: 339.2
     height: 612.8
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -233,9 +233,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: ecf7ffff3ef8ffff04fbffffa65a0000d65a0000305b0000
+      m_SelectedIDs: 085b0000
+      m_LastClickedID: 23304
+      m_ExpandedIDs: 0efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -278,8 +278,8 @@ MonoBehaviour:
     y: 0
     width: 1224
     height: 612.8
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 8}
@@ -567,9 +567,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.070432544, y: 1.0522208, z: -0.070432544}
+    m_Target: {x: 18.356092, y: 2.3664968, z: 30.293493}
     speed: 2
-    m_Value: {x: -0.070432544, y: 1.0522208, z: -0.070432544}
+    m_Value: {x: 18.356092, y: 2.3664968, z: 30.293493}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -615,13 +615,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.2864038, y: 0.16282314, z: -0.049460545, w: 0.942884}
+    m_Target: {x: 0.39979154, y: 0.35241234, z: -0.16997266, w: 0.82890594}
     speed: 2
-    m_Value: {x: 0.28640166, y: 0.16282192, z: -0.049460173, w: 0.94287694}
+    m_Value: {x: 0.39979154, y: 0.35241237, z: -0.16997266, w: 0.828906}
   m_Size:
-    m_Target: 1.7929242
+    m_Target: 11.377758
     speed: 2
-    m_Value: 1.7929242
+    m_Value: 11.377758
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -715,22 +715,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Hordes/Buildings
+    - Assets/Hordes/Units
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Hordes/Buildings
+  - Assets/Hordes/Units
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\Steve\Documents\GitHub\Rails
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: f65d0000
-    m_LastClickedID: 24054
-    m_ExpandedIDs: 00000000d45d0000d65d0000d85d0000da5d0000dc5d0000de5d0000e05d0000e25d0000
+    m_SelectedIDs: 205f0000
+    m_LastClickedID: 24352
+    m_ExpandedIDs: 00000000f65e0000f85e0000fa5e0000fc5e0000fe5e0000005f0000025f0000045f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -758,7 +758,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d45d0000d65d0000d85d0000da5d0000dc5d0000de5d0000e05d0000e25d0000
+    m_ExpandedIDs: 00000000f65e0000f85e0000fa5e0000fc5e0000fe5e0000005f0000025f0000045f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -783,9 +783,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 085b0000
+    m_LastClickedInstanceID: 23304
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000000000005c5b00007e5b0000865b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -862,8 +862,8 @@ MonoBehaviour:
     y: 0
     width: 484.80005
     height: 1027.6
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
