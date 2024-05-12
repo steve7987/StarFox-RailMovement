@@ -194,8 +194,8 @@ MonoBehaviour:
     y: 0
     width: 339.2
     height: 612.8
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -235,7 +235,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: b072d3ffe272d3ff1473d3ff4673d3ff7873d3ff2c74d9ff3a74d9ffa074d9ffae74d9ff9c6fffffce6ffffff26fffff0070ffff3270ffff5670ffff6470ffff8870ffff9670ffff5278ffffe47dfffff27dffff3088ffff3e88ffff4692ffff8499ffff1c9fffff22b1fffff0b3fffffeb3ffff1accffff0cfbffff0efbffff8c5a0000
+      m_ExpandedIDs: ecf7ffff3ef8ffff04fbffffa65a0000d65a0000305b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -278,8 +278,8 @@ MonoBehaviour:
     y: 0
     width: 1224
     height: 612.8
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 8}
@@ -728,9 +728,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 885d0000
-    m_LastClickedID: 23944
-    m_ExpandedIDs: 00000000665d0000685d00006a5d00006c5d00006e5d0000705d0000725d0000745d0000
+    m_SelectedIDs: f65d0000
+    m_LastClickedID: 24054
+    m_ExpandedIDs: 00000000d45d0000d65d0000d85d0000da5d0000dc5d0000de5d0000e05d0000e25d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -758,7 +758,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000665d0000685d00006a5d00006c5d00006e5d0000705d0000725d0000745d0000
+    m_ExpandedIDs: 00000000d45d0000d65d0000d85d0000da5d0000dc5d0000de5d0000e05d0000e25d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -837,7 +837,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 679.2
-    width: 1563
+    width: 1562.2
     height: 393.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -862,8 +862,8 @@ MonoBehaviour:
     y: 0
     width: 484.80005
     height: 1027.6
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}

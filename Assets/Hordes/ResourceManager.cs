@@ -30,13 +30,13 @@ public class ResourceManager : MonoBehaviour
 
         consumableResources = new Dictionary<ConsumableResource, float>();
         
-        consumableResources.Add(ConsumableResource.Ore, 5000);
-        consumableResources.Add(ConsumableResource.Rare, 1000);
+        consumableResources.Add(ConsumableResource.Ore, 0);
+        consumableResources.Add(ConsumableResource.Rare, 0);
 
         flowResources = new Dictionary<FlowResource, (float, float)>();
 
-        flowResources.Add(FlowResource.Worker, (0, 1000));
-        flowResources.Add(FlowResource.Power, (0, 1000));
+        flowResources.Add(FlowResource.Worker, (0, 0));
+        flowResources.Add(FlowResource.Power, (0, 0));
     }
 
     private void Start()
@@ -69,6 +69,8 @@ public class ResourceManager : MonoBehaviour
 
     public void AddResource(FlowResource resource, float amount)
     {
+        Debug.Log("Add " + amount + " " + resource);
+
         float nsup = flowResources[resource].Item2;
         float nused = flowResources[resource].Item1;
         if (amount > 0)
@@ -88,6 +90,24 @@ public class ResourceManager : MonoBehaviour
 
         UpdateResourceDisplay();
 
+    }
+
+    public void RemoveFlowResource(FlowResource resource, float amount)
+    {
+        float nsup = flowResources[resource].Item2;
+        float nused = flowResources[resource].Item1;
+
+        if (amount > 0)
+        {
+            nsup -= amount;
+
+        }
+        else
+        {
+            nused += amount;
+        }
+        flowResources[resource] = (nused, nsup);
+        UpdateResourceDisplay();
     }
 
     public void UpdateResourceDisplay()

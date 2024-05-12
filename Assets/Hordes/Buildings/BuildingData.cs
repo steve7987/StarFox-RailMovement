@@ -13,6 +13,7 @@ public class BuildingData : ScriptableObject
     public float healthBarWidth = 160f;
     public Vector2 healthBarOffset = new Vector2(0, 2);
     public Vector2Int buildingSize = new Vector2Int(2, 2);
+    public bool dragBuild = false;
 
     //some area display info
     //e.g. damper field, or ore mine resources?
@@ -36,6 +37,10 @@ public class BuildingData : ScriptableObject
     [Header("Supply")]
     public float workerSupply = 0;
     public float powerSupply = -1;
+
+    [Header("Combat")]
+    public float maxHitPoints = 50;
+
 
     //methods
 

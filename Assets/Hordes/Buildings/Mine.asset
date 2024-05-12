@@ -17,7 +17,8 @@ MonoBehaviour:
   colliderHeight: 0.25
   healthBarWidth: 160
   healthBarOffset: {x: 0, y: 1.75}
-  buildingSize: {x: 2, y: 2}
+  buildingSize: {x: 3, y: 3}
+  dragBuild: 0
   showDamperField: 1
   damperRange: 0
   buildTime: 8
@@ -27,3 +28,4 @@ MonoBehaviour:
   rareGen: 0
   workerSupply: -4
   powerSupply: -4
+  maxHitPoints: 50

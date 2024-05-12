@@ -14,10 +14,13 @@ public class BuildingController : MonoBehaviour
     [SerializeField] RectTransform canvas;
     [SerializeField] Slider slider;
 
+    public bool underConstruction { get; private set; }
 
     public BuildingData data { get; private set; }
 
-    public void Setup(BuildingData data)
+    public float currentHitPoints;
+
+    public void Setup(BuildingData data, bool skipConstruction)
     {
         this.data = data;
 
@@ -36,12 +39,34 @@ public class BuildingController : MonoBehaviour
         var rt = slider.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(data.healthBarWidth, rt.sizeDelta.y);
 
-        //begin building itself
-        StartCoroutine(ConstructionCorountine());
+        //start consuming resources
+        if (data.powerSupply < 0)
+        {
+            ResourceManager.instance.AddResource(FlowResource.Power, data.powerSupply);
+        }
+        if (data.workerSupply < 0)
+        {
+            ResourceManager.instance.AddResource(FlowResource.Worker, data.workerSupply);
+        }
+
+
+        if (skipConstruction)
+        {
+            currentHitPoints = data.maxHitPoints;
+            OnConstructionComplete();
+        }
+        else
+        {
+            //begin building itself
+            StartCoroutine(ConstructionCorountine());
+            currentHitPoints = 0;
+        }
+        
     }
 
     IEnumerator ConstructionCorountine()
     {
+        underConstruction = true;
         spriteRenderer.color = constructionColor;
         //yield return new WaitForSeconds(data.buildTime);
         if (data.damperRange > 0)
@@ -55,6 +80,7 @@ public class BuildingController : MonoBehaviour
 
         while (timeElapsed < data.buildTime)
         {
+            currentHitPoints += Time.deltaTime * data.maxHitPoints / data.buildTime;
             timeElapsed += Time.deltaTime;
             slider.value = timeElapsed / data.buildTime;
             yield return null;
@@ -66,6 +92,7 @@ public class BuildingController : MonoBehaviour
 
     public void OnConstructionComplete()
     {
+        underConstruction = false;
         if (data.damperRange > 0)
         {
             GridManager.instance.AddDampers(transform.position, data, false);
@@ -99,6 +126,48 @@ public class BuildingController : MonoBehaviour
             ResourceManager.instance.AddResource(ConsumableResource.Ore, data.oreGen);
             ResourceManager.instance.AddResource(ConsumableResource.Rare, data.rareGen);
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHitPoints -= amount;
+        canvas.gameObject.SetActive(true);
+        slider.value = currentHitPoints / data.maxHitPoints;
+        Debug.Log(currentHitPoints);
+        if (currentHitPoints <= 0)
+        {
+            DestroyBuilding();
+        }
+    }
+
+    public void DestroyBuilding()
+    {
+        if (!underConstruction)
+        {
+
+            //need to update resources
+            ResourceManager.instance.RemoveFlowResource(FlowResource.Power, data.powerSupply);
+            ResourceManager.instance.RemoveFlowResource(FlowResource.Worker, data.workerSupply);
+        }
+        else
+        {
+            //since we are under construction, only remove drains
+            //start consuming resources
+            if (data.powerSupply < 0)
+            {
+                ResourceManager.instance.RemoveFlowResource(FlowResource.Power, data.powerSupply);
+            }
+            if (data.workerSupply < 0)
+            {
+                ResourceManager.instance.RemoveFlowResource(FlowResource.Worker, data.workerSupply);
+            }
+        }
+        
+
+        //alert grid manager to update 
+        GridManager.instance.DestroyBuilding(this);
+
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()

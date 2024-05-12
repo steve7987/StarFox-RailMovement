@@ -57,12 +57,11 @@ public class MKInterpreter : MonoBehaviour
                 //Debug.Log("Intersection point: " + hitPoint);
                 buildHighlighter.SetPosition(hitPoint);
 
-                if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                if ((Input.GetMouseButtonDown(0) || (availableBuildings[currentBuildIndex].dragBuild && Input.GetMouseButton(0))) 
+                    && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
-                    //currentState = MKState.NoAction;
-                    //buildHighlighter.DeActivate();
-                    gridBuilder.CreateBuilding(availableBuildings[currentBuildIndex], hitPoint);
-                    //buildHighlighter.CheckBuildable();
+                    //instead should build drag build stuff differently?
+                    gridBuilder.CreateBuilding(availableBuildings[currentBuildIndex], hitPoint, true);
                     buildHighlighter.Activate(availableBuildings[currentBuildIndex]);
                 }
             }
@@ -106,4 +105,16 @@ public class MKInterpreter : MonoBehaviour
         buildHighlighter.Activate(availableBuildings[index]);
 
     }
+
+
+    public void SaveGame()
+    {
+        GridManager.instance.SaveGame();
+    }
+
+    public void LoadGame()
+    {
+        GridManager.instance.LoadGame(availableBuildings[0]);
+    }
+
 }

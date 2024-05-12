@@ -18,6 +18,7 @@ MonoBehaviour:
   healthBarWidth: 100
   healthBarOffset: {x: 0, y: 3.3}
   buildingSize: {x: 1, y: 1}
+  dragBuild: 0
   showDamperField: 1
   damperRange: 7
   buildTime: 5
@@ -27,3 +28,4 @@ MonoBehaviour:
   rareGen: 0
   workerSupply: 0
   powerSupply: -1
+  maxHitPoints: 50

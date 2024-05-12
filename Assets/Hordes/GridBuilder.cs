@@ -7,14 +7,16 @@ public class GridBuilder : MonoBehaviour
     [SerializeField] BuildingController buildingPrefab;
 
     GridManager gridManager;
+    
+    
 
     private void Awake()
     {
-        gridManager = new GridManager(100, 100);
+        gridManager = new GridManager(100, 100, this);
     }
 
 
-    public void CreateBuilding(BuildingData data, Vector3 worldPos)
+    public void CreateBuilding(BuildingData data, Vector3 worldPos, bool useResources)
     {
         Vector3 pos = GridDrawer.WorldToGridPosition(worldPos);
      
@@ -23,34 +25,26 @@ public class GridBuilder : MonoBehaviour
             Debug.LogWarning("Can't build here");
             return;
         }
-        if (!ResourceManager.instance.HasResource(ConsumableResource.Ore, data.oreCost)
+        if (useResources && (!ResourceManager.instance.HasResource(ConsumableResource.Ore, data.oreCost)
          || !ResourceManager.instance.HasResource(ConsumableResource.Rare, data.rareCost)
          || !ResourceManager.instance.HasResource(FlowResource.Worker, -data.workerSupply)
-         || !ResourceManager.instance.HasResource(FlowResource.Power, -data.powerSupply))
+         || !ResourceManager.instance.HasResource(FlowResource.Power, -data.powerSupply)))
         {
             Debug.LogWarning("Not enough resources");
             return;
         }
         
         var build = Instantiate(buildingPrefab, pos, Quaternion.identity);
-        build.Setup(data);
+        build.Setup(data, !useResources);
 
-        //adjust resources
-        ResourceManager.instance.AddResource(ConsumableResource.Ore, -data.oreCost);
-        ResourceManager.instance.AddResource(ConsumableResource.Rare, -data.rareCost);
-
-        //don't change these until construction complete??
-        if (data.powerSupply < 0)
+        //adjust consumable resources
+        if (useResources)
         {
-            ResourceManager.instance.AddResource(FlowResource.Power, data.powerSupply);
+            ResourceManager.instance.AddResource(ConsumableResource.Ore, -data.oreCost);
+            ResourceManager.instance.AddResource(ConsumableResource.Rare, -data.rareCost);
         }
-        if (data.workerSupply < 0)
-        {
-            ResourceManager.instance.AddResource(FlowResource.Worker, data.workerSupply);
-        }
-        
 
-        gridManager.AddBuilding(pos, data);
+        gridManager.AddBuilding(pos, build);
     }
 
     private void OnDrawGizmos()
