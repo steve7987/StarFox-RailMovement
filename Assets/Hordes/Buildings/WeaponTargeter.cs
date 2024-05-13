@@ -8,8 +8,11 @@ public class WeaponTargeter : MonoBehaviour
     public Selectable target { get; private set; }
     bool findNewTarget = false;
 
+    float radius;
+
     public void SetSize(float radius)
     {
+        this.radius = radius;
         GetComponent<SphereCollider>().radius = radius;
     }
 
@@ -27,7 +30,12 @@ public class WeaponTargeter : MonoBehaviour
     {
         if (target != null)
         {
-            //target.TakeDamage(12 * Time.deltaTime);
+            //target out of range
+            if ((target.transform.position - transform.position).sqrMagnitude > radius * radius)
+            {
+                target = null;
+                LookForTarget();
+            }
             findNewTarget = true;
         }
         else if (findNewTarget)
@@ -39,7 +47,7 @@ public class WeaponTargeter : MonoBehaviour
 
     void LookForTarget()
     {
-        var hits = Physics.OverlapSphere(transform.position, GetComponent<SphereCollider>().radius, 1 << LayerMask.NameToLayer("Rake"));
+        var hits = Physics.OverlapSphere(transform.position, radius, 1 << LayerMask.NameToLayer("Rake"));
         foreach (var h in hits)
         {
             if (h.GetComponent<Selectable>() != null)
@@ -47,5 +55,17 @@ public class WeaponTargeter : MonoBehaviour
                 target = h.GetComponent<Selectable>();
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (target != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(target.transform.position + Vector3.up, 0.25f);
+            Gizmos.DrawLine(transform.position + Vector3.up, target.transform.position + Vector3.up);
+        }
+        
+
     }
 }

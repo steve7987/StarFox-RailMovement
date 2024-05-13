@@ -2,42 +2,102 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UnitCommand
+{
+    Stop,
+    AttackMove,
+    Move,
+    //Patrol?
+}
+
 public class SoldierController : Selectable
 {
     [SerializeField] WeaponTargeter targeter;
     [SerializeField] UnityEngine.UI.Slider hpSlider;
 
+    [SerializeField] UnitData data;
+
     Animator animator;
 
-    float currentHP = 50;
+    float currentHP;
 
     Vector3 moveTarget;
+
+    UnitCommand currentAction;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        moveTarget = transform.position;
+        moveTarget = transform.position;  //ie don't move anywhere
+        currentAction = UnitCommand.Stop;
+        targeter.SetSize(data.attackRange);  //need to account for scale?
+        currentHP = data.maxHP;
     }
 
     private void Update()
     {
-        if (targeter.target != null)
+        if (currentAction == UnitCommand.Move)
         {
-            transform.forward = targeter.target.transform.position - transform.position;
+            SimpleMove();
         }
-        animator.SetBool("Attack", targeter.target != null);
+        else if (currentAction == UnitCommand.AttackMove)
+        {
+            if (targeter.target == null)
+            {
+                SimpleMove();
+            }
+            else
+            {
+                SimpleAttack();
+            }
+        }
+        else
+        {
+            if (targeter.target != null)
+            {
+                SimpleAttack();
+            }
+            else
+            {
+                animator.SetBool("Attack", false);
+            }
+        }
+    }
+
+    private void SimpleAttack()
+    {
+        transform.forward = targeter.target.transform.position - transform.position;
+        animator.SetBool("Attack", true);
+        animator.SetFloat("Speed", 0);
+    }
+
+    private void SimpleMove()
+    {
+        Vector3 dir = moveTarget - transform.position;
+        animator.SetBool("Attack", false);
+        if (dir.sqrMagnitude < 1)
+        {
+            animator.SetFloat("Speed", 0);
+            currentAction = UnitCommand.Stop;
+        }
+        else
+        {
+            transform.forward = dir;
+            transform.position += dir.normalized * data.moveSpeed * Time.deltaTime;
+            animator.SetFloat("Speed", 5);
+        }
     }
 
     public override string GetText()
     {
-        return "Soldier";
+        return data.unitName;
     }
 
     public override void TakeDamage(float amount)
     {
         currentHP -= amount;
         hpSlider.gameObject.SetActive(true);
-        hpSlider.value = currentHP / 50f;
+        hpSlider.value = currentHP / data.maxHP;
         if (currentHP <= 0)
         {
             animator.SetTrigger("Death");
@@ -50,13 +110,14 @@ public class SoldierController : Selectable
     public override void SmartAction(Vector3 target)
     {
         moveTarget = target;
+        currentAction = UnitCommand.AttackMove;
     }
 
     void Fire()
     {
         if (targeter.target != null)
         {
-            targeter.target.TakeDamage(1);
+            targeter.target.TakeDamage(data.damage);
         }
     }
 }

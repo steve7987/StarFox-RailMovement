@@ -5,9 +5,10 @@ using UnityEngine;
 public class RakeController : Selectable
 {
     [SerializeField] Vector3 target;
-    [SerializeField] float speed = 2.5f;
-
+    
     [SerializeField] UnityEngine.UI.Slider hpSlider;
+
+    [SerializeField] UnitData data;
 
     Animator animator;
 
@@ -18,7 +19,8 @@ public class RakeController : Selectable
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        currentHP = 50;
+        currentHP = data.maxHP;
+        GetComponent<SphereCollider>().radius = data.attackRange / transform.localScale.x;
     }
 
     private void Update()
@@ -43,7 +45,7 @@ public class RakeController : Selectable
             else
             {
                 transform.forward = dir;
-                transform.position += dir.normalized * speed * Time.deltaTime;
+                transform.position += dir.normalized * data.moveSpeed * Time.deltaTime;
                 animator.SetFloat("Speed", 5);
             }
             
@@ -55,7 +57,7 @@ public class RakeController : Selectable
     {
         currentHP -= amount;
         hpSlider.gameObject.SetActive(true);
-        hpSlider.value = currentHP / 50f;
+        hpSlider.value = currentHP / data.maxHP;
         if (currentHP <= 0)
         {
             animator.SetTrigger("Death");
@@ -81,12 +83,6 @@ public class RakeController : Selectable
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(target, 0.5f);
-    }
-
     //triggered in animation
     void Claw()
     {
@@ -98,6 +94,6 @@ public class RakeController : Selectable
 
     public override string GetText()
     {
-        return "Rake";
+        return data.unitName;
     }
 }
