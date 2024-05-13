@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Soldier
   m_EditorClassIdentifier: 
   unitName: Soldier
+  prefab: {fileID: 7072444061591711186, guid: 7733abbe5edce2443b9fb6be4966163a, type: 3}
+  trainTime: 10
   maxHP: 50
   damage: 6
   attackRange: 5

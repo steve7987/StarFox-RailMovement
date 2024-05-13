@@ -13,6 +13,7 @@ public enum UnitCommand
 public class SoldierController : Selectable
 {
     [SerializeField] WeaponTargeter targeter;
+    [SerializeField] Canvas canvas;
     [SerializeField] UnityEngine.UI.Slider hpSlider;
 
     [SerializeField] UnitData data;
@@ -98,6 +99,7 @@ public class SoldierController : Selectable
         currentHP -= amount;
         hpSlider.gameObject.SetActive(true);
         hpSlider.value = currentHP / data.maxHP;
+        canvas.gameObject.SetActive(true);
         if (currentHP <= 0)
         {
             animator.SetTrigger("Death");

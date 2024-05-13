@@ -6,6 +6,8 @@ public class SelectionPanel : MonoBehaviour
 {
     [SerializeField] TMPro.TMP_Text text;
 
+    [SerializeField] List<ActionButton> actionButtons;
+
     public Selectable currentTarget { get; private set; }
 
     /// <summary>
@@ -21,6 +23,13 @@ public class SelectionPanel : MonoBehaviour
         }
         currentTarget = selectable;
         text.text = selectable.GetText();  //instead: get description from DS
+
+        //setup action buttons
+        for (int i = 0; i < actionButtons.Count; i++)
+        {
+            actionButtons[i].gameObject.SetActive(i < currentTarget.GetNumActions());
+        }
+
     }
 
     /// <summary>
@@ -37,6 +46,24 @@ public class SelectionPanel : MonoBehaviour
     {
         currentTarget = null;
         text.text = "";
+    }
+
+
+    //trigger these Action calls through button on UI or hotkey?
+    public void Action1()
+    {
+        if (currentTarget != null)
+        {
+            currentTarget.Action1();
+        }
+    }
+
+    public void Action2()
+    {
+        if (currentTarget != null)
+        {
+            currentTarget.Action2();
+        }
     }
 
     public void DestroyTarget()
@@ -60,7 +87,7 @@ public class SelectionPanel : MonoBehaviour
     {
         if (currentTarget == null)
         {
-            Debug.LogWarning("Trying to destroy null target");
+            Debug.LogWarning("Trying to damage null target");
             return;
         }
 

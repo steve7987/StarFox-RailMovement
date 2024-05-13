@@ -23,9 +23,13 @@ MonoBehaviour:
   damperRange: 0
   buildTime: 15
   oreCost: 20
-  rareCost: 10
+  rareCost: 0
   oreGen: 0
   rareGen: 0
   workerSupply: -2
   powerSupply: -2
+  trainableUnit: {fileID: 11400000, guid: 6a457adcfd1ee0b48a8354ffcadf2613, type: 2}
   maxHitPoints: 50
+  attackRange: 0
+  attackDamage: 6
+  attackSpeed: 0.7

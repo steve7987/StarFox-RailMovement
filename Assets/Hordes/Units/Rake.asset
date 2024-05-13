@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Rake
   m_EditorClassIdentifier: 
   unitName: Rake
+  prefab: {fileID: 1719715730817530755, guid: 02f2fd76d3d7fe64fbb788f88ca25c49, type: 3}
+  trainTime: 10
   maxHP: 30
   damage: 10
   attackRange: 0.375

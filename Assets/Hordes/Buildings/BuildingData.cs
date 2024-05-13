@@ -38,6 +38,9 @@ public class BuildingData : ScriptableObject
     public float workerSupply = 0;
     public float powerSupply = -1;
 
+    [Header("Training")]
+    public UnitData trainableUnit; 
+
     [Header("Combat")]
     public float maxHitPoints = 50;
     public float attackRange = 0f;

@@ -16,7 +16,8 @@ public class BuildingController : Selectable
 
     [Header("Health Bar")]
     [SerializeField] RectTransform canvas;
-    [SerializeField] Slider slider;
+    [SerializeField] Slider healthBar;
+    [SerializeField] Slider progressBar;  //work on progress bar display rules, and in combo with health bar
 
     public bool underConstruction { get; private set; }
 
@@ -38,10 +39,12 @@ public class BuildingController : Selectable
         
         bc.size = new Vector3(data.buildingSize.x, data.colliderHeight, data.buildingSize.y);
 
-        //setup canvas and health bar
+        //setup canvas and health bar and progress bar
         canvas.localPosition = new Vector3(data.healthBarOffset.x, data.healthBarOffset.y, 0);
-        var rt = slider.GetComponent<RectTransform>();
+        var rt = healthBar.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(data.healthBarWidth, rt.sizeDelta.y);
+        rt = progressBar.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(data.healthBarWidth * 0.9f, rt.sizeDelta.y);
 
         //start consuming resources
         if (data.powerSupply < 0)
@@ -94,7 +97,8 @@ public class BuildingController : Selectable
         {
             currentHitPoints += Time.deltaTime * data.maxHitPoints / data.buildTime;
             timeElapsed += Time.deltaTime;
-            slider.value = timeElapsed / data.buildTime;
+            healthBar.value = currentHitPoints / data.maxHitPoints;
+            progressBar.value = timeElapsed / data.buildTime;
             yield return null;
         }
 
@@ -111,7 +115,7 @@ public class BuildingController : Selectable
             GridDrawer.instance.RefreshDamperField();
         }
 
-        //hide health bar, will re-enable later if building takes damage?
+        //hide health bar, will re-enable later if building takes damage? what about progress bar
         canvas.gameObject.SetActive(false);
 
         //add in resources, start resource gen corountine if needed
@@ -160,14 +164,11 @@ public class BuildingController : Selectable
         }
     }
 
-    //make this abstract?
-    //or use separate damage component?
     public override void TakeDamage(float amount)
     {
         currentHitPoints -= amount;
         canvas.gameObject.SetActive(true);
-        slider.value = currentHitPoints / data.maxHitPoints;
-        //Debug.Log(currentHitPoints);
+        healthBar.value = currentHitPoints / data.maxHitPoints;
         if (currentHitPoints <= 0)
         {
             DestroyBuilding();
@@ -203,6 +204,55 @@ public class BuildingController : Selectable
         GridManager.instance.DestroyBuilding(this);
 
         Destroy(gameObject);
+    }
+
+    public override int GetNumActions()
+    {
+        return data.trainableUnit == null ? 0 : 1;
+    }
+
+    int unitsRemaining = 0;
+
+    public override void Action1()
+    {
+        //train unit
+        if (data.trainableUnit != null)
+        {
+            unitsRemaining += 1;
+            if (unitsRemaining == 1)
+            {
+                StartCoroutine(TrainUnitCoroutine());
+            }
+            
+        }
+    }
+
+    IEnumerator TrainUnitCoroutine()
+    {
+        canvas.gameObject.SetActive(true);
+        while (unitsRemaining > 0)
+        {
+            float elapsed = 0;
+            while (elapsed < data.trainableUnit.trainTime)
+            {
+                elapsed += Time.deltaTime;
+                progressBar.value = elapsed / data.trainableUnit.trainTime;
+                yield return null;
+            }
+            Debug.Log("Create " + data.trainableUnit.unitName);
+            Instantiate(data.trainableUnit.prefab, transform.position, Quaternion.identity);
+            progressBar.value = 0f;
+            unitsRemaining -= 1;
+        }
+        if (healthBar.value >= 0.99f)
+        {
+            canvas.gameObject.SetActive(false);
+        }
+    }
+
+    public override void Action2()
+    {
+        //refund building? research tech?
     }
 
     private void OnDrawGizmosSelected()
