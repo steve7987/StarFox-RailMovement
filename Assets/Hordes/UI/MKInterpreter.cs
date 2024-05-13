@@ -10,8 +10,9 @@ public class MKInterpreter : MonoBehaviour
         NoAction,
         Build,
 
-        //drag select
-        //etc?
+        //selected target
+        //dragging to select
+        //targeting command (e.g. patrol/attack move)
     }
 
     [SerializeField] GridBuilder gridBuilder;
@@ -89,6 +90,18 @@ public class MKInterpreter : MonoBehaviour
                 {
                     selectionPanel.ClearTarget();
                 }
+            }
+            else if (selectionPanel.currentTarget != null && Input.GetMouseButtonDown(1) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from the mouse position
+                Plane plane = new Plane(Vector3.up, Vector3.zero); // Define a plane using its normal and a point on it
+
+                float distance;
+                if (plane.Raycast(ray, out distance)) // Check if the ray intersects the plane
+                {
+                    Vector3 hitPoint = ray.GetPoint(distance); // Get the intersection point
+                    selectionPanel.currentTarget.SmartAction(hitPoint);
+                }    
             }
         }
     }

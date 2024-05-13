@@ -8,5 +8,10 @@ public abstract class Selectable : MonoBehaviour
 
     public abstract void TakeDamage(float amount);
 
+    public virtual void SmartAction(Vector3 target)
+    {
+
+    }
+
     //get team enum??
 }

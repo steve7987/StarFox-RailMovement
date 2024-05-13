@@ -6,7 +6,7 @@ public class SelectionPanel : MonoBehaviour
 {
     [SerializeField] TMPro.TMP_Text text;
 
-    Selectable currentTarget;
+    public Selectable currentTarget { get; private set; }
 
     /// <summary>
     /// Displays this particular selectable thing

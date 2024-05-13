@@ -11,7 +11,8 @@ public class BuildingController : Selectable
     [SerializeField] SpriteRenderer spriteRenderer;
 
     [Header("Attacks")]
-    [SerializeField] SphereCollider rangeCollider;
+    [SerializeField] WeaponTargeter weaponTargeter;
+    //[SerializeField] SphereCollider rangeCollider;
 
     [Header("Health Bar")]
     [SerializeField] RectTransform canvas;
@@ -67,11 +68,11 @@ public class BuildingController : Selectable
 
         if (data.attackRange > 0)
         {
-            rangeCollider.radius = data.attackRange;
+            weaponTargeter.SetSize(data.attackRange);
         }
         else
         {
-            Destroy(rangeCollider.gameObject);
+            Destroy(weaponTargeter.gameObject);
         }
     }
 
@@ -126,6 +127,26 @@ public class BuildingController : Selectable
         if (data.oreGen != 0 || data.rareGen != 0)
         {
             StartCoroutine(ResourceGenCoroutine());
+        }
+        if (data.attackRange > 0)
+        {
+            StartCoroutine(WeaponFireCoroutine());
+        }
+    }
+
+    IEnumerator WeaponFireCoroutine()
+    {
+        while (true)
+        {
+            if (weaponTargeter.target != null)
+            {
+                weaponTargeter.target.TakeDamage(data.attackDamage);
+                yield return new WaitForSeconds(data.attackSpeed);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 

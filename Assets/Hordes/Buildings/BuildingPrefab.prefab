@@ -361,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructionColor: {r: 0, g: 0.7176471, b: 0.99215686, a: 0.7254902}
   spriteRenderer: {fileID: 7341996268493427618}
-  rangeCollider: {fileID: 1534445653599145276}
+  weaponTargeter: {fileID: 1980188496998709481}
   canvas: {fileID: 338363254293016727}
   slider: {fileID: 4018511224859908552}
   currentHitPoints: 0

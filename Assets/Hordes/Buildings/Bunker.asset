@@ -30,3 +30,5 @@ MonoBehaviour:
   powerSupply: -2
   maxHitPoints: 50
   attackRange: 8
+  attackDamage: 6
+  attackSpeed: 0.45

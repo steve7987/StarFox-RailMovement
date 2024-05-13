@@ -41,6 +41,8 @@ public class BuildingData : ScriptableObject
     [Header("Combat")]
     public float maxHitPoints = 50;
     public float attackRange = 0f;
+    public float attackDamage = 6f;
+    public float attackSpeed = 0.7f;
 
 
     //methods
